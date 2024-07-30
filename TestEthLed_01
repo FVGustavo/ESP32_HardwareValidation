@@ -17,23 +17,25 @@
 
 void app_main(void)
 {
-  gpio_config_t eth_led_out_config;
-  eth_led_out_config.intr_type = GPIO_INTR_DISABLE;                          // Desabilita interrupção
-  eth_led_out_config.mode = GPIO_MODE_OUTPUT;                                // Configura o pino como saída
-  eth_led_out_config.pin_bit_mask = (1ULL << ETH_RXD0) | (1ULL << ETH_RXD1); // Seleciona os pinos GPIO
-  eth_led_out_config.pull_up_en = GPIO_PULLUP_DISABLE;                       // Desabilita pull up
-  eth_led_out_config.pull_down_en = GPIO_PULLDOWN_ENABLE;                    // Desabilita pull down
-  gpio_config(&eth_led_out_config);
+  gpio_config_t eth_out_config;
+  eth_out_config.intr_type = GPIO_INTR_DISABLE;
+  eth_out_config.mode = GPIO_MODE_OUTPUT;
+  eth_out_config.pin_bit_mask = (1ULL << ETH_RXD0) | (1ULL << ETH_RXD1);
+  eth_out_config.pull_up_en = GPIO_PULLUP_DISABLE;
+  eth_out_config.pull_down_en = GPIO_PULLDOWN_ENABLE;
+  gpio_config(&eth_out_config);
 
-  gpio_config_t eth_led_in_config;
-  eth_led_in_config.intr_type = GPIO_INTR_DISABLE;                                               // Desabilita interrupção
-  eth_led_in_config.mode = GPIO_MODE_INPUT;                                                      // Configura o pino como saída
-  eth_led_in_config.pin_bit_mask = (1ULL << ETH_TXD0) | (1ULL << ETH_TXD1) | (1ULL << ETH_TXEN); // Seleciona os pinos GPIO
-  eth_led_in_config.pull_up_en = GPIO_PULLUP_DISABLE;                                            // Desabilita pull up
-  eth_led_in_config.pull_down_en = GPIO_PULLDOWN_ENABLE;                                         // Habilita pull down
-  gpio_config(&eth_led_in_config);
+  gpio_config_t eth_in_config;
+  eth_in_config.intr_type = GPIO_INTR_DISABLE;
+  eth_in_config.mode = GPIO_MODE_INPUT;
+  eth_in_config.pin_bit_mask = (1ULL << ETH_TXD0) | (1ULL << ETH_TXD1) | (1ULL << ETH_TXEN);
+  eth_in_config.pull_up_en = GPIO_PULLUP_DISABLE;
+  eth_in_config.pull_down_en = GPIO_PULLDOWN_ENABLE;
+  gpio_config(&eth_in_config);
 
   gpio_set_level(ETH_TXEN, 1);
+  gpio_set_level(ETH_RXD0, 1);
+  gpio_set_level(ETH_RXD1, 1);
 
   while (1)
   {
